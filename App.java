@@ -117,7 +117,6 @@ public class App {
                 int focusMinutes = (int) focusTimeSpinner.getValue();
                 int breakMinutes = (int) breakTimeSpinner.getValue();
 
-                // TODO #1 Change the line below to call the start method of the FocusTimer class.
                 startFocusTimer(focusMinutes, breakMinutes);
 
                 // Once our timer starts, disable the start button so it can't be pressed.
@@ -149,7 +148,6 @@ public class App {
         JFrame messageFrame = new JFrame();
 
         focusTimer = new Timer(1000, new ActionListener() {
-            // TODO We can get rid of the variable minutes and just use focusMinutes.
             int minutes = focusMinutes;
 
             @Override
