@@ -116,6 +116,8 @@ public class App {
             startButton.addActionListener(e -> {
                 int focusMinutes = (int) focusTimeSpinner.getValue();
                 int breakMinutes = (int) breakTimeSpinner.getValue();
+
+                // TODO #1 Change the line below to call the start method of the FocusTimer class.
                 startFocusTimer(focusMinutes, breakMinutes);
 
                 // Once our timer starts, disable the start button so it can't be pressed.
