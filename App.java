@@ -20,25 +20,29 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+import javax.swing.JCheckBoxMenuItem;
+import java.awt.Color;
+import javax.swing.KeyStroke;
+import java.awt.event.KeyEvent;
+import java.awt.event.InputEvent;
 
 public class App {
-    public static JFrame frame;
-    public static String frameTitle;
+    private static JFrame frame;
+    private static String frameTitle;
     private static boolean breakTimerOpen = false;
     private static JSpinner focusTimeSpinner;
     private static Timer focusTimer;
     private static JSpinner breakTimeSpinner;
     private static Timer breakTimer;
     private static JLabel breakTimerLabel;
-    public static int seconds = 0;
+    private static int seconds = 0;
     private static JButton startButton;
     private static JPanel timerPanel;
     private static JLabel focusTimerLabel;
-    private static JPanel optionsPanel;
     private static JMenuBar menuBar;
     private static JMenu optionsMenu;
-    private static JCheckBox showTimeCheckbox;
-    private static JCheckBox windowOnTopCheckBox;
+    private static JCheckBoxMenuItem showTimeMenuItem;
+    private static JCheckBoxMenuItem windowOnTopMenuItem;
 
     public static void main(String[] args) {
         // Makes the program look like the rest of the user's system interface.
@@ -89,27 +93,6 @@ public class App {
             focusTimerLabel.setHorizontalAlignment(SwingConstants.CENTER);
             timerPanel.add(focusTimerLabel);
 
-            optionsPanel = new JPanel();
-            sidePanel.add(optionsPanel, BorderLayout.EAST);
-            optionsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-            menuBar = new JMenuBar();
-            optionsPanel.add(menuBar);
-
-            optionsMenu = new JMenu("Options");
-            menuBar.add(optionsMenu);
-
-            showTimeCheckbox = new JCheckBox("Show time in title bar");
-            optionsMenu.add(showTimeCheckbox);
-
-            windowOnTopCheckBox = new JCheckBox("Keep this window on top");
-            windowOnTopCheckBox.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    Settings.windowOnTop(frame, windowOnTopCheckBox);
-                }
-            });
-            optionsMenu.add(windowOnTopCheckBox);
-
             // Create a start button
             startButton = new JButton("Start");
             // When the button is clicked, run the code in the brackets {}
@@ -133,6 +116,26 @@ public class App {
             // Add the start button to the frame
             frame.getContentPane().add(panel, BorderLayout.CENTER);
             frame.getContentPane().add(startButton, BorderLayout.SOUTH);
+
+            menuBar = new JMenuBar();
+            menuBar.setForeground(new Color(0, 0, 0));
+            frame.getContentPane().add(menuBar, BorderLayout.NORTH);
+
+            optionsMenu = new JMenu("Options");
+            menuBar.add(optionsMenu);
+
+            showTimeMenuItem = new JCheckBoxMenuItem("Show time in title bar");
+            showTimeMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.ALT_DOWN_MASK));
+            optionsMenu.add(showTimeMenuItem);
+
+            windowOnTopMenuItem = new JCheckBoxMenuItem("Keep this window on top");
+            windowOnTopMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.ALT_DOWN_MASK));
+            windowOnTopMenuItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    Settings.windowOnTop(frame, windowOnTopMenuItem);
+                }
+            });
+            optionsMenu.add(windowOnTopMenuItem);
             frame.setSize(350, 150);
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
@@ -178,10 +181,10 @@ public class App {
                 focusTimerLabel.setText(String.format("%02d:%02d", minutes, seconds));
                 // Call the showTime method. (If the showTime checkbox is checked, the method
                 // will show the remaining time in the titlebar.)
-                Settings.showTime(frame, frameTitle, showTimeCheckbox, minutes, seconds);
+                Settings.showTime(frame, frameTitle, showTimeMenuItem, minutes, seconds);
 
                 // Check for 1 minute remaining and schedule info window display
-                if (minutes == 1 && seconds == 0) {
+                if (focusMinutes == 1 && seconds == 0) {
                     SwingUtilities.invokeLater(() -> {
                         String message = "One minute until break time. :)";
                         messageFrame.setAlwaysOnTop(true);
