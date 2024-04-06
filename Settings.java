@@ -20,4 +20,18 @@ public class Settings {
 			frame.setAlwaysOnTop(false);
 		}
 	}
+
+	// Used to stop the break timer from opening in full screen mode if the menu
+	// option is selected
+	public static void fullScreenState(JFrame breakFrame, JCheckBoxMenuItem preventFullScreenMenuItem) {
+		if (preventFullScreenMenuItem.isSelected()) {
+			breakFrame.setExtendedState(JFrame.NORMAL);
+			breakFrame.setAlwaysOnTop(false);
+			breakFrame.setUndecorated(false);
+		} else {
+			breakFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			breakFrame.setAlwaysOnTop(true);
+			breakFrame.setUndecorated(true);
+		}
+	}
 }
