@@ -4,3 +4,4 @@
 2. Come back here and from the list click on [Focus.jar](https://github.com/griggril000/Focus/blob/main/Focus.jar).
 3. Click the three dot menu then select download.
 ## Newest Version
+1.2.0
