@@ -1,7 +1,7 @@
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 
-public class Settings {
+public class Options {
 	// Shows the remaining time in the title bar.
 	public static void showTime(JFrame frame, String frameTitle, JCheckBoxMenuItem showTimeMenuItem, int minutes,
 			int seconds) {

@@ -25,6 +25,11 @@ import java.awt.Color;
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
 import java.awt.event.InputEvent;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class App {
 	private static JFrame frame;
@@ -44,6 +49,7 @@ public class App {
 	private static JCheckBoxMenuItem showTimeMenuItem;
 	private static JCheckBoxMenuItem windowOnTopMenuItem;
 	private static JCheckBoxMenuItem preventFullScreenMenuItem;
+	private static JMenuItem updateCheckMenuItem;
 
 	public static void main(String[] args) {
 		// Makes the program look like the rest of the user's system interface.
@@ -133,7 +139,7 @@ public class App {
 			windowOnTopMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.ALT_DOWN_MASK));
 			windowOnTopMenuItem.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Settings.windowOnTop(frame, windowOnTopMenuItem);
+					Options.windowOnTop(frame, windowOnTopMenuItem);
 				}
 			});
 			optionsMenu.add(windowOnTopMenuItem);
@@ -142,6 +148,9 @@ public class App {
 					"Prevent the break timer window from opening in full screen mode");
 			preventFullScreenMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.ALT_DOWN_MASK));
 			optionsMenu.add(preventFullScreenMenuItem);
+			
+			updateCheckMenuItem = new JMenuItem("Check for Updates");
+			optionsMenu.add(updateCheckMenuItem);
 			frame.setSize(350, 150);
 			frame.setLocationRelativeTo(null);
 			frame.setVisible(true);
@@ -187,7 +196,7 @@ public class App {
 				focusTimerLabel.setText(String.format("%02d:%02d", minutes, seconds));
 				// Call the showTime method. (If the showTime checkbox is checked, the method
 				// will show the remaining time in the titlebar.)
-				Settings.showTime(frame, frameTitle, showTimeMenuItem, minutes, seconds);
+				Options.showTime(frame, frameTitle, showTimeMenuItem, minutes, seconds);
 
 				// Check for 1 minute remaining and schedule info window display
 				if (focusMinutes == 1 && seconds == 0) {
@@ -209,7 +218,7 @@ public class App {
 		JFrame breakFrame = new JFrame("Break Timer");
 		// Runs the fullScreenState method which enables or disables the full screen
 		// mode of the break timer
-		Settings.fullScreenState(breakFrame, preventFullScreenMenuItem);
+		Options.fullScreenState(breakFrame, preventFullScreenMenuItem);
 		breakFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
 		breakTimerLabel = new JLabel();
