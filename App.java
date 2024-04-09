@@ -13,7 +13,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -43,7 +42,6 @@ public class App {
 	private static JCheckBoxMenuItem showTimeMenuItem;
 	private static JCheckBoxMenuItem windowOnTopMenuItem;
 	private static JCheckBoxMenuItem preventFullScreenMenuItem;
-	private static JMenuItem updateCheckMenuItem;
 
 	public static void main(String[] args) {
 		// Makes the program look like the rest of the user's system interface.
@@ -143,8 +141,6 @@ public class App {
 			preventFullScreenMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.ALT_DOWN_MASK));
 			optionsMenu.add(preventFullScreenMenuItem);
 			
-			updateCheckMenuItem = new JMenuItem("Check for Updates");
-			optionsMenu.add(updateCheckMenuItem);
 			frame.setSize(350, 150);
 			frame.setLocationRelativeTo(null);
 			frame.setVisible(true);
