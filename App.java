@@ -35,13 +35,13 @@ public class App {
 	private static JLabel breakTimerLabel;
 	private static int seconds = 0;
 	private static JButton startButton;
-	private static JPanel timerPanel;
-	private static JLabel focusTimerLabel;
 	private static JMenuBar menuBar;
 	private static JMenu optionsMenu;
 	private static JCheckBoxMenuItem showTimeMenuItem;
 	private static JCheckBoxMenuItem windowOnTopMenuItem;
 	private static JCheckBoxMenuItem preventFullScreenMenuItem;
+	private static JPanel timerPanel;
+	private static JLabel focusTimerLabel;
 
 	public static void main(String[] args) {
 		// Makes the program look like the rest of the user's system interface.
@@ -77,16 +77,11 @@ public class App {
 			breakSpinnerLabel.setHorizontalAlignment(SwingConstants.CENTER);
 			panel.add(breakSpinnerLabel);
 			panel.add(breakTimeSpinner);
-
-			JPanel sidePanel = new JPanel();
-			sidePanel.setLayout(new BorderLayout(0, 0));
-
-			frame.getContentPane().add(sidePanel, BorderLayout.EAST); // Adjust BorderLayout placement if needed
-
+			
 			timerPanel = new JPanel();
 			timerPanel.setBorder(new TitledBorder(null, "Timer", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-			sidePanel.add(timerPanel, BorderLayout.WEST);
-
+			frame.getContentPane().add(timerPanel, BorderLayout.EAST);
+			
 			focusTimerLabel = new JLabel("00:00");
 			focusTimerLabel.setVerticalAlignment(SwingConstants.CENTER);
 			focusTimerLabel.setHorizontalAlignment(SwingConstants.CENTER);
