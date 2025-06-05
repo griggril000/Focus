@@ -171,7 +171,10 @@ public class App {
 
 		darkModeMenuItem = new JCheckBoxMenuItem("Dark Mode");
 		darkModeMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.ALT_DOWN_MASK));
-		darkModeMenuItem.addActionListener(e -> toggleDarkMode());
+		darkModeMenuItem.addActionListener(e -> {
+			darkMode = !darkMode;
+			Options.toggleDarkMode(frame, timerPanel, focusTimerLabel, sessionCounterLabel, startButton, darkMode);
+		});
 		optionsMenu.add(darkModeMenuItem);
 
 		lockedModeMenuItem = new JCheckBoxMenuItem("Locked Mode");
@@ -184,10 +187,8 @@ public class App {
 
 	// Disable or enable all options menu items
 	private static void setOptionsMenuEnabled(boolean enabled) {
-		showTimeMenuItem.setEnabled(enabled);
-		windowOnTopMenuItem.setEnabled(enabled);
-		darkModeMenuItem.setEnabled(enabled);
-		lockedModeMenuItem.setEnabled(enabled);
+		Options.setOptionsMenuEnabled(showTimeMenuItem, windowOnTopMenuItem, darkModeMenuItem, lockedModeMenuItem,
+				enabled);
 	}
 
 	// Handle start button click
@@ -343,51 +344,5 @@ public class App {
 	}
 
 	// Toggle dark mode
-	private static void toggleDarkMode() {
-		darkMode = !darkMode;
-		Color bg = darkMode ? new Color(40, 44, 52) : Color.WHITE;
-		Color fg = darkMode ? Color.WHITE : Color.BLACK;
-		frame.getContentPane().setBackground(bg);
-		timerPanel.setBackground(bg);
-		focusTimerLabel.setForeground(fg);
-		sessionCounterLabel.setForeground(fg);
-		sessionCounterLabel.setBackground(bg);
-		// Set timer panel border title color
-		if (timerPanel.getBorder() instanceof TitledBorder) {
-			TitledBorder border = (TitledBorder) timerPanel.getBorder();
-			border.setTitleColor(fg);
-		}
-		// Set all components in the main panel
-		for (java.awt.Component c : frame.getContentPane().getComponents()) {
-			if (c instanceof JPanel) {
-				c.setBackground(bg);
-				for (java.awt.Component cc : ((JPanel) c).getComponents()) {
-					cc.setBackground(bg);
-					cc.setForeground(fg);
-
-					// Set label style
-					if (cc instanceof JLabel) {
-						cc.setForeground(fg);
-					}
-					// Set spinner label style (for nested panels)
-					if (cc instanceof JPanel) {
-						for (java.awt.Component ccc : ((JPanel) cc).getComponents()) {
-							if (ccc instanceof JLabel) {
-								ccc.setForeground(fg);
-							}
-						}
-					}
-				}
-			} else {
-				c.setBackground(bg);
-				c.setForeground(fg);
-			}
-		}
-		// Set start button style
-		if (startButton != null) {
-			startButton.setBackground(darkMode ? new Color(60, 63, 65) : new JButton().getBackground());
-			startButton.setForeground(Color.BLACK); // Always use black text for the button
-		}
-		frame.repaint();
-	}
+	// (Now handled by Options.toggleDarkMode)
 }
